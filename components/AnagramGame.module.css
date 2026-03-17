@@ -86,6 +86,14 @@
   transform: scale(0.92);
 }
 
+.hintedSlot {
+  border-style: solid;
+  border-color: #a78bfa55;
+  background: #a78bfa11;
+  color: #a78bfa;
+  cursor: default;
+}
+
 /* ── Progress Dots ── */
 .progressDots {
   display: flex;
