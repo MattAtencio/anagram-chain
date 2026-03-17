@@ -7,8 +7,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import CHAINS from "../data/chains";
 import { getDailyChain, getDailySeed, scrambleWord } from "../lib/daily";
-import { playTap, playPlace, playCorrect, playWrong, playComplete, playHint } from "../lib/sounds";
+import { playTap, playPlace, playCorrect, playWrong, playComplete, playHint, playBonus } from "../lib/sounds";
 import { launchConfetti } from "../lib/confetti";
+import BONUS_WORDS from "../data/bonusWords";
 import styles from "./AnagramGame.module.css";
 
 // ─── Font constants ──────────────────────────────────────────
@@ -160,6 +161,10 @@ export default function AnagramGame() {
   const MAX_HINTS_PER_WORD = 1;
   const HINT_PENALTY = 15;
 
+  // ── Bonus word state ──────────────────────────────────────
+  const [bonusWords, setBonusWords] = useState(savedState?.bonusWords ?? []);
+  const [bonusFlash, setBonusFlash] = useState(null); // shows briefly when bonus found
+
   // ── Onboarding ─────────────────────────────────────────────
   const [showOnboarding, setShowOnboarding] = useState(
     () => !loadStorage("anagram-onboarded", false)
@@ -272,6 +277,8 @@ export default function AnagramGame() {
     setSolvedCount(0);
     setFailed(false);
     setFailedAt(-1);
+    setBonusWords([]);
+    setBonusFlash(null);
     setupWord(0);
   };
 
@@ -366,14 +373,30 @@ export default function AnagramGame() {
         }
       }, 800);
     } else {
-      playWrong();
-      setPhase("wrong");
-      setTimeout(() => {
-        // Keep hinted slots, clear the rest
-        const newPlaced = placed.map((p, i) => (hintedSlots.has(i) ? p : null));
-        setPlaced(newPlaced);
-        setPhase("playing");
-      }, 500);
+      // Check if it's a valid bonus word (anagram of target, real word)
+      const target = chain.words[wordIndex];
+      const alternatives = BONUS_WORDS[target] || [];
+      if (alternatives.includes(answer) && !bonusWords.includes(answer)) {
+        // Bonus word found!
+        playBonus();
+        setBonusWords((prev) => [...prev, answer]);
+        setBonusFlash(answer);
+        setTimeout(() => setBonusFlash(null), 1500);
+        // Clear placed but don't shake — it was a real word
+        setTimeout(() => {
+          const newPlaced = placed.map((p, i) => (hintedSlots.has(i) ? p : null));
+          setPlaced(newPlaced);
+        }, 300);
+      } else {
+        playWrong();
+        setPhase("wrong");
+        setTimeout(() => {
+          // Keep hinted slots, clear the rest
+          const newPlaced = placed.map((p, i) => (hintedSlots.has(i) ? p : null));
+          setPlaced(newPlaced);
+          setPhase("playing");
+        }, 500);
+      }
     }
   };
 
@@ -443,6 +466,7 @@ export default function AnagramGame() {
       solvedCount: finalSolvedCount,
       failed: didFail,
       failedAt: failIdx,
+      bonusWords,
     });
   };
 
@@ -461,7 +485,9 @@ export default function AnagramGame() {
       })
       .join("");
 
-    const text = `Anagram Chain #${dayNumber} \u26d3\ufe0f\n${dots}\n${totalSolved}/5 | \u23f1\ufe0f ${formatTime(totalTime)}\nanagram.mattatencio.com`;
+    const totalBonus = (savedState?.bonusWords || bonusWords).length;
+    const bonusLine = totalBonus > 0 ? `\n\u2b50 ${totalBonus} bonus word${totalBonus !== 1 ? "s" : ""}` : "";
+    const text = `Anagram Chain #${dayNumber} \u26d3\ufe0f\n${dots}\n${totalSolved}/5 | \u23f1\ufe0f ${formatTime(totalTime)}${bonusLine}\nanagram.mattatencio.com`;
 
     if (navigator.share) {
       navigator.share({ text });
@@ -706,7 +732,29 @@ export default function AnagramGame() {
           >
             Word {wordIndex + 1} of 5 &middot;{" "}
             {chain.words[wordIndex].length} letters
+            {bonusWords.length > 0 && (
+              <span style={{ color: "#fbbf24" }}>
+                {" "}&middot; {"\u2b50"} {bonusWords.length}
+              </span>
+            )}
           </div>
+
+          {/* Bonus word flash */}
+          {bonusFlash && (
+            <div
+              className={styles.popIn}
+              style={{
+                textAlign: "center",
+                fontFamily: F_OUT,
+                fontWeight: 700,
+                fontSize: 13,
+                color: "#fbbf24",
+                padding: "4px 0",
+              }}
+            >
+              {"\u2b50"} Bonus: {bonusFlash}!
+            </div>
+          )}
 
           {/* Answer Slots */}
           <div
@@ -955,6 +1003,31 @@ export default function AnagramGame() {
               </div>
             </div>
           </div>
+
+          {/* Bonus words found */}
+          {((savedState?.bonusWords?.length > 0) || bonusWords.length > 0) && (
+            <div
+              style={{
+                background: "#1a1505",
+                border: "1px solid #fbbf2433",
+                borderRadius: 14,
+                padding: "10px 16px",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <span style={{ fontSize: 16 }}>{"\u2b50"}</span>
+              <div>
+                <div style={{ fontFamily: F_OUT, fontSize: 12, fontWeight: 700, color: "#fbbf24" }}>
+                  {(savedState?.bonusWords || bonusWords).length} Bonus Word{(savedState?.bonusWords || bonusWords).length !== 1 ? "s" : ""}
+                </div>
+                <div style={{ fontFamily: F_OUT, fontSize: 11, color: "#fbbf2488", marginTop: 2 }}>
+                  {(savedState?.bonusWords || bonusWords).join(", ")}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Per-word times */}
           <div
