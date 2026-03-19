@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a1a"/>
+      <stop offset="100%" stop-color="#0d1a2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c4a6e"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="108" fill="url(#bg)"/>
+
+  <!-- Subtle ambient glow -->
+  <circle cx="256" cy="200" r="180" fill="url(#glow)"/>
+
+  <!-- Chain link 1 (top-left) -->
+  <rect x="88" y="120" width="72" height="80" rx="14" fill="#0d1a2e" stroke="#1e3a5f" stroke-width="3"/>
+  <text x="124" y="174" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="38" fill="#e8e8f0">A</text>
+
+  <!-- Chain link 2 (top-right) -->
+  <rect x="180" y="120" width="72" height="80" rx="14" fill="#0d1a2e" stroke="#1e3a5f" stroke-width="3"/>
+  <text x="216" y="174" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="38" fill="#e8e8f0">N</text>
+
+  <!-- Chain link connector (top) -->
+  <rect x="268" y="120" width="72" height="80" rx="14" fill="#0d1a2e" stroke="#0ea5e9" stroke-width="3" stroke-opacity="0.5"/>
+  <text x="304" y="174" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="38" fill="#0ea5e9">A</text>
+
+  <!-- Chain link 4 (top-far-right) -->
+  <rect x="356" y="120" width="72" height="80" rx="14" fill="#0d1a2e" stroke="#1e3a5f" stroke-width="3"/>
+  <text x="392" y="174" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="38" fill="#e8e8f0">G</text>
+
+  <!-- Connecting chain visual (curved line between rows) -->
+  <path d="M256 210 C256 250, 256 250, 256 290" stroke="#0ea5e9" stroke-width="3" fill="none" stroke-dasharray="8,6" opacity="0.4"/>
+  <circle cx="256" cy="250" r="6" fill="#0ea5e9" opacity="0.6"/>
+
+  <!-- Bottom row — answer slots -->
+  <rect x="100" y="300" width="64" height="72" rx="12" fill="#0ea5e90d" stroke="#0ea5e933" stroke-width="2.5"/>
+  <text x="132" y="348" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="32" fill="#0ea5e9">G</text>
+
+  <rect x="178" y="300" width="64" height="72" rx="12" fill="#0ea5e90d" stroke="#0ea5e933" stroke-width="2.5"/>
+  <text x="210" y="348" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="32" fill="#0ea5e9">A</text>
+
+  <rect x="256" y="300" width="64" height="72" rx="12" fill="#0ea5e90d" stroke="#0ea5e933" stroke-width="2.5"/>
+  <text x="288" y="348" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="32" fill="#0ea5e9">N</text>
+
+  <rect x="334" y="300" width="64" height="72" rx="12" fill="#0ea5e90d" stroke="#0ea5e933" stroke-width="2.5"/>
+  <text x="366" y="348" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="32" fill="#0ea5e9">A</text>
+
+  <!-- Progress dots at bottom -->
+  <circle cx="196" cy="416" r="8" fill="#22c55e" opacity="0.9"/>
+  <circle cx="226" cy="416" r="8" fill="#22c55e" opacity="0.9"/>
+  <circle cx="256" cy="416" r="8" stroke="#0ea5e9" stroke-width="2.5" fill="none" opacity="0.8"/>
+  <circle cx="286" cy="416" r="8" stroke="#1e3a5f" stroke-width="2.5" fill="none" opacity="0.5"/>
+  <circle cx="316" cy="416" r="8" stroke="#1e3a5f" stroke-width="2.5" fill="none" opacity="0.5"/>
+</svg>
