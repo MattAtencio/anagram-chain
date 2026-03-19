@@ -5,6 +5,7 @@
 // ============================================================
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import Link from "next/link";
 import CHAINS from "../data/chains";
 import { getDailyChain, getDailySeed, scrambleWord } from "../lib/daily";
 import { playTap, playPlace, playCorrect, playWrong, playComplete, playHint, playBonus } from "../lib/sounds";
@@ -557,6 +558,29 @@ export default function AnagramGame() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 14, alignItems: "center", paddingTop: 2 }}>
+          <Link
+            href="/help"
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 8,
+              border: "1.5px solid #1c1c35",
+              background: "#0d0d1e",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: F_OUT,
+              fontWeight: 700,
+              fontSize: 13,
+              color: "#33334a",
+              textDecoration: "none",
+              cursor: "pointer",
+              flexShrink: 0,
+            }}
+            aria-label="Help"
+          >
+            ?
+          </Link>
           <div style={{ textAlign: "center" }}>
             <div
               style={{

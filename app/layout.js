@@ -18,6 +18,7 @@ export const metadata = {
   title: "Anagram Chain — Daily Word Puzzle",
   description: "Unscramble 5 words in a chain. Solve one to unlock the next. New chain every day.",
   manifest: "/manifest.json",
+  icons: { icon: "/icon.svg", apple: "/icon.svg" },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
