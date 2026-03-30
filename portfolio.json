@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/MattAtencio/portfolio/main/schemas/portfolio.schema.json",
+  "title": "Anagram Chain",
+  "tagline": "Unscramble words to build chains",
+  "description": "Anagram Chain combines word unscrambling with chain-building mechanics. Players solve anagrams in sequence, with each word connecting to the next.",
+  "category": "games",
+  "status": "active",
+  "techStack": [
+    "Next.js",
+    "JavaScript",
+    "PWA",
+    "CSS Modules"
+  ],
+  "liveUrl": "https://anagram.mattatencio.com",
+  "images": {
+    "thumbnail": "/images/projects/anagram-thumb.png"
+  },
+  "highlights": [
+    "Seeded daily puzzle selection",
+    "Canvas-based confetti celebrations",
+    "Procedural audio with Web Audio API"
+  ],
+  "isPublic": true,
+  "startDate": "2025-01",
+  "featured": false
+}
