@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/MattAtencio/portfolio/main/schemas/project.schema.json",
+  "id": "anagram-chain",
+  "name": "Anagram Chain",
+  "kind": "project",
+  "type": "game",
+  "status": "active",
+  "group": "games-daily-puzzles",
+  "tags": ["daily-puzzle", "word", "public"]
+}
